@@ -1,11 +1,9 @@
 import 'dart:convert' show json;
 
 class NewsData {
-
   int status;
   List<Flash> flash;
   List<NewsItem> list;
-
   NewsData.fromParams({this.status, this.flash, this.list});
 
   factory NewsData(jsonStr) => jsonStr == null ? null : jsonStr is String ? new NewsData.fromJson(json.decode(jsonStr)) : new NewsData.fromJson(jsonStr);
@@ -40,12 +38,13 @@ class NewsItem {
   String name;
   String nid;
   String pic;
+  String pic1;
+  String pic2;
+  String pic3;
   String sid;
   String time;
   String title;
-
   NewsItem.fromParams({this.commentnum, this.id, this.mid, this.modelid, this.name, this.nid, this.pic, this.sid, this.time, this.title});
-
   NewsItem.fromJson(jsonRes) {
     commentnum = jsonRes['commentnum'];
     id = jsonRes['id'];
@@ -54,6 +53,9 @@ class NewsItem {
     name = jsonRes['name'];
     nid = jsonRes['nid'];
     pic = jsonRes['pic'];
+    pic1 = jsonRes['pic1'];
+    pic2 = jsonRes['pic2'];
+    pic3 = jsonRes['pic3'];
     sid = jsonRes['sid'];
     time = jsonRes['time'];
     title = jsonRes['title'];

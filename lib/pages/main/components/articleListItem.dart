@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youxia/pages/main/detail/index.dart';
 import 'package:youxia/pages/main/types/newsItem.dart';
 
 TextStyle itemFooterStyle = TextStyle(color: Colors.grey, fontSize: 12);
@@ -11,85 +12,87 @@ double contentPadding = 10;
 enum ArticleListItemType { normal, images, ad }
 
 class ArticleListItem extends StatelessWidget {
-  NewsItem item;
+  final NewsItem item;
 
-  ArticleListItem(NewsItem item) {
-    this.item = item;
-  }
+  ArticleListItem(this.item);
 
   @override
   Widget build(BuildContext context) {
+    Widget result;
+
     if (item.pic1 != null &&
         item.pic2 != null &&
         item.pic3 != null &&
         item.pic1.isNotEmpty &&
         item.pic2.isNotEmpty &&
-        item.pic3.isNotEmpty) {
-      return new Container(
+        item.pic3.isNotEmpty &&
+        item.pic1.startsWith('http') &&
+        item.pic2.startsWith('http') &&
+        item.pic3.startsWith('http')) {
+      result = new Container(
           padding: EdgeInsets.fromLTRB(
               contentPadding, contentPadding, contentPadding, 0),
           child: new Row(children: <Widget>[
             new Expanded(
                 child: new Container(
-              height: imagesContentHeight,
-              decoration: BoxDecoration(
-                  border:
+                  height: imagesContentHeight,
+                  decoration: BoxDecoration(
+                      border:
                       Border(bottom: BorderSide(width: 1, color: Colors.grey))),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    item.title,
-                    style: itemTitleStyle,
-                    maxLines: 2,
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        item.title,
+                        style: itemTitleStyle,
+                        maxLines: 2,
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Container(
+                              width: 110,
+                              height: 70,
+                              child: Image.network(
+                                item.pic1,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            new Container(
+                              width: 110,
+                              height: 70,
+                              child: Image.network(
+                                item.pic2,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            new Container(
+                              width: 110,
+                              height: 70,
+                              child: Image.network(
+                                item.pic3,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        new Container(
-                          width: 110,
-                          height: 70,
-                          child: Image.network(
-                            item.pic1,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        new Container(
-                          width: 110,
-                          height: 70,
-                          child: Image.network(
-                            item.pic2,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        new Container(
-                          width: 110,
-                          height: 70,
-                          child: Image.network(
-                            item.pic3,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ))
+                ))
           ]));
-    }
-
-    if (item.pic != null || item.pic1.isNotEmpty) {
+    } else if (item.pic != null ||
+        (item.pic1.isNotEmpty && item.pic1.startsWith('http'))) {
       var picUrl = item.pic ??= item.pic1;
 
-      return new Container(
+      result = new Container(
         padding: EdgeInsets.fromLTRB(
             contentPadding, contentPadding, contentPadding, 0),
         child: new Row(
           children: <Widget>[
-            Expanded(
-              child: Container(
+            new Expanded(
+              child: new Container(
                 height: normalContentHeight,
                 padding: EdgeInsets.fromLTRB(0, 0, 0, contentPadding),
                 decoration: BoxDecoration(
@@ -103,7 +106,7 @@ class ArticleListItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
-                          Container(
+                          new Container(
                             child: Text(
                               item.title,
                               style: itemTitleStyle,
@@ -152,6 +155,22 @@ class ArticleListItem extends StatelessWidget {
           ],
         ),
       );
+    } else {
+      result = Container(
+        height: 0,
+      );
     }
+
+
+//    return result;
+
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+          return new NewsDetail(item.sid);
+        }));
+      },
+      child: result,
+    );
   }
 }
