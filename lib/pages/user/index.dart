@@ -3,10 +3,9 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:youxia/components/YXButton.dart';
 import 'package:youxia/model/user.dart';
 import 'package:youxia/pages/login/index.dart';
+import 'package:youxia/pages/login/type/LoginResponse.dart';
 import 'package:youxia/pages/user/collection/index.dart';
 import 'package:youxia/pages/user/settings.dart';
-import 'package:youxia/service/userService.dart';
-import 'package:youxia/type/UserInfo.dart';
 import 'package:youxia/utils/config.dart';
 import 'package:youxia/utils/utils.dart';
 
@@ -67,10 +66,9 @@ class UserPageState extends State<UserPage> {
       );
     }
 
-//    var model = UserModel.of(context);
     return new ScopedModelDescendant(
       builder: (ctx, child, UserModel model) {
-        UserInfo userData = model.userInfo??Utils.getDefaultUser();
+        LoginUserInfo loginUserInfo = model.loginUserInfo ?? Utils.getDefaultLoginUserInfo();
         return new Scaffold(
           body: SafeArea(
               child: new Container(
@@ -93,19 +91,20 @@ class UserPageState extends State<UserPage> {
                               new Container(
                                 width: 40,
                                 height: 40,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: model.avatar != null
-                                    ? Image.network(
-                                        model.avatar,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : Image.asset(
-                                        'assets/user_default_header.png'),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                  child: loginUserInfo!=null&&loginUserInfo.avatar != null
+                                      ? Image.network(
+                                    loginUserInfo.avatar,
+                                    fit: BoxFit.cover,
+                                  )
+                                      : Image.asset(
+                                      'assets/user_default_header.png'),
+                                ),
                                 margin: EdgeInsets.only(right: 10),
                               ),
                               Text(
-                                userData.username,
+                                loginUserInfo.username,
                                 style: TextStyle(fontSize: 16),
                               )
                             ],
@@ -158,7 +157,7 @@ class UserPageState extends State<UserPage> {
                               size: 16,
                             ),
                             new Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: EdgeInsets.fromLTRB(Config.horizontalPadding, 12, 0, 12),
                               child: Text('设置'),
                             )
                           ],
@@ -186,22 +185,14 @@ class UserPageState extends State<UserPage> {
   void initState() {
     super.initState();
     var model = UserModel.of(context);
-/*    UserService.getUserInfo().then((user) {
-      if (user != null) {
-        model.setUserInfo(user);
-      }
-    });
-    Utils.getLocalStorage(Config.USER_AVATAR_KEY).then((avatar) {
-      model.setAvatar(avatar);
-    });
-    Utils.getLocalStorage(Config.USER_TOKEN_KEY);*/
-    Future.wait([Utils.getLocalStorage(Config.USER_AVATAR_KEY),Utils.getLocalStorage(Config.USER_TOKEN_KEY)]).then((List results){
-      var avatar = results[0];
-      var token = results[1];
-      if (token != null) {
-        model.setAvatar(avatar);
-        model.setToken(token);
-      }
-    });
+    // 从本地存储中获取用户信息和token
+    var loginInfo = LoginResponse(Utils.getLocalStorage(Config.USER_DATA_KEY));
+
+    var token = Utils.getLocalStorage(Config.USER_TOKEN_KEY);
+    //如果存在token则视为已登录，将数据存入model以便调用。
+    if (token != null) {
+      loginInfo==null?model.setLoginUserInfo(Utils.getDefaultLoginUserInfo()):model.setLoginUserInfo(loginInfo.data.userinfo);
+      model.setToken(token);
+    }
   }
 }

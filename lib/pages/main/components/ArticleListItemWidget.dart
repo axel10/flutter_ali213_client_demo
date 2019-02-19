@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youxia/pages/main/detail/index.dart';
 import 'package:youxia/pages/main/types/newsItem.dart';
+import 'package:youxia/utils/utils.dart';
 
 TextStyle itemFooterStyle = TextStyle(color: Colors.grey, fontSize: 12);
 TextStyle itemTitleStyle = TextStyle(fontSize: 18);
@@ -11,15 +12,13 @@ double contentPadding = 10;
 
 enum ArticleListItemType { normal, images, ad }
 
-class ArticleListItem extends StatelessWidget {
+class ArticleListItemWidget extends StatelessWidget {
   final NewsItem item;
-
-  ArticleListItem(this.item);
+  ArticleListItemWidget(this.item);
 
   @override
   Widget build(BuildContext context) {
     Widget result;
-
     if (item.pic1 != null &&
         item.pic2 != null &&
         item.pic3 != null &&
@@ -29,6 +28,8 @@ class ArticleListItem extends StatelessWidget {
         item.pic1.startsWith('http') &&
         item.pic2.startsWith('http') &&
         item.pic3.startsWith('http')) {
+
+      // 底部三张图片的item
       result = new Container(
           padding: EdgeInsets.fromLTRB(
               contentPadding, contentPadding, contentPadding, 0),
@@ -49,29 +50,30 @@ class ArticleListItem extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: new Row(
+                          // 底部三张图片
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             new Container(
                               width: 110,
                               height: 70,
-                              child: Image.network(
-                                item.pic1,
+                              child: Utils.getCacheImage(
+                                imageUrl: item.pic1,
                                 fit: BoxFit.cover,
                               ),
                             ),
                             new Container(
                               width: 110,
                               height: 70,
-                              child: Image.network(
-                                item.pic2,
+                              child: Utils.getCacheImage(
+                                imageUrl: item.pic2,
                                 fit: BoxFit.cover,
                               ),
                             ),
                             new Container(
                               width: 110,
                               height: 70,
-                              child: Image.network(
-                                item.pic3,
+                              child: Utils.getCacheImage(
+                                imageUrl: item.pic3,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -116,8 +118,9 @@ class ArticleListItem extends StatelessWidget {
                           ),
                           new Row(
                             children: <Widget>[
+                              //时间
                               Text(
-                                '2小时前',
+                                Utils.getCurrentTimeStringByAddTime(item.time),
                                 style: itemFooterStyle,
                               ),
                               Container(
@@ -143,8 +146,8 @@ class ArticleListItem extends StatelessWidget {
                     new Container(
                       width: 120,
                       height: normalContentHeight,
-                      child: Image.network(
-                        picUrl,
+                      child: Utils.getCacheImage(
+                        imageUrl: picUrl,
                         fit: BoxFit.cover,
                       ),
                     )
@@ -167,7 +170,7 @@ class ArticleListItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-          return new NewsDetail(item.sid);
+          return new NewsDetailPage(item.sid);
         }));
       },
       child: result,

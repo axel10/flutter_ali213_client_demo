@@ -1,0 +1,1 @@
+enum EnterPosition { guide, news }

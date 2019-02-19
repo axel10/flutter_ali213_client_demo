@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/index.dart';
 import 'package:youxia/pages/main/detail/index.dart';
 import 'package:youxia/pages/user/collection/components/articleCollectionItemWidget.dart';
 import 'package:youxia/pages/user/collection/components/guideCollectionItemWidget.dart';
@@ -12,7 +13,6 @@ import 'package:youxia/utils/utils.dart';
 class ArticleCollection extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return ArticleCollectionState();
   }
 }
@@ -26,29 +26,45 @@ class ArticleCollectionState extends State<ArticleCollection>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _tabController = new TabController(length: 2, vsync: this);
 
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
-        newsList =
-            (json.decode(prefs.getString(NEWS_COLLECTION_LIST_KEY) ?? '[]')
-                    as List)
-                .map((o) => ArticleCollectionItem.fromJson(o))
-                .toList();
-        guideList =
-            (json.decode(prefs.getString(GUIDE_COLLECTION_LIST_KEY) ?? '[]')
-                    as List)
-                .map((o) => GuideCollectionItem.fromJson(o))
-                .toList();
+        newsList = (json.decode(
+                    prefs.getString(Config.NEWS_COLLECTION_LIST_KEY) ?? '[]')
+                as List)
+            .map((o) => ArticleCollectionItem.fromJson(o))
+            .toList();
+        guideList = (json.decode(
+                    prefs.getString(Config.GUIDE_COLLECTION_LIST_KEY) ?? '[]')
+                as List)
+            .map((o) => GuideCollectionItem.fromJson(o))
+            .toList();
       });
     });
   }
 
+  Widget checkDataLength({List list, Widget child}) {
+    if (list.length > 0) {
+      return child;
+    } else {
+      return Column(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              child: Center(
+                child: Text('还没有收藏任何文章'),
+              ),
+            ),
+          )
+        ],
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return new Scaffold(
       appBar: Utils.createYXAppBar(title: '我的收藏', actions: <Widget>[
         new InkWell(
@@ -82,38 +98,45 @@ class ArticleCollectionState extends State<ArticleCollection>
           new Container(
               child: new Expanded(
                   child: new TabBarView(controller: _tabController, children: [
-            new ListView(
-              shrinkWrap: true,
-              // 新闻收藏列表
-              children: [
-                new Container(
-                  child: new Column(
-                    children: newsList.map((item) {
-                      return Utils.navigateTo(
-                          context: context,
-                          child: new ArticleCollectionItemWidget(
-                            item: item,
-                          ),
-                        route: MaterialPageRoute(builder: (ctx) => new NewsDetail(item.ID))
-                      );
-                    }).toList(),
-                  ),
-                )
-              ],
-            ),
-            new ListView(
-              shrinkWrap: true,
-              // 攻略收藏列表
-              children: guideList.map((item) {
-                return Utils.navigateTo(
-                    context: context,
-                    child: new GuideCollectionItemWidget(
-                      item: item,
-                    ),
-                    route: MaterialPageRoute(builder: (ctx) => new NewsDetail(item.ID))
-                );
-              }).toList(),
-            ),
+            checkDataLength(
+                list: newsList,
+                child: new ListView(
+                  shrinkWrap: true,
+                  // 新闻收藏列表
+                  children: [
+                    new Container(
+                      child: new Column(
+                        children: newsList.map((item) {
+                          return Utils.navigateTo(
+                              context: context,
+                              child: new ArticleCollectionItemWidget(
+                                item: item,
+                              ),
+                              route: MaterialPageRoute(
+                                  builder: (ctx) =>
+                                      new NewsDetailPage(item.ID)));
+                        }).toList(),
+                      ),
+                    )
+                  ],
+                )),
+            checkDataLength(
+                list: guideList,
+                child: new ListView(
+                  shrinkWrap: true,
+                  // 攻略收藏列表
+                  children: guideList.map((item) {
+                    return Utils.navigateTo(
+                        context: context,
+                        child: new GuideCollectionItemWidget(
+                          item: item,
+                        ),
+                        route: MaterialPageRoute(
+                            builder: (ctx) => new GuideArticlePage(
+                                  articleId: item.ID,
+                                )));
+                  }).toList(),
+                )),
           ])))
         ],
       ),
@@ -148,8 +171,8 @@ class ArticleCollectionState extends State<ArticleCollection>
           );
         })) {
       var prefs = await SharedPreferences.getInstance();
-      prefs.setString(NEWS_COLLECTION_LIST_KEY, null);
-      prefs.setString(GUIDE_COLLECTION_LIST_KEY, null);
+      prefs.setString(Config.NEWS_COLLECTION_LIST_KEY, null);
+      prefs.setString(Config.GUIDE_COLLECTION_LIST_KEY, null);
       setState(() {
         guideList = [];
         newsList = [];

@@ -6,10 +6,8 @@ import 'package:youxia/pages/main/types/newsItem.dart';
 class CategoryData {
   List<NewsItem> newsList;
   List<Flash> flashList;
-
   CategoryData(this.newsList,this.flashList);
 }
-
 
 /*List<Category> categorys = [
   Category('1', '推荐'),
@@ -24,8 +22,6 @@ class CategoryData {
 class NewsModel extends Model {
   Map<String, CategoryData> categoryData = new Map();
   List<Category> categorys=[];
-
-//  String currentKey=categorys[0].key;
 
   void addItems(String key, List<NewsItem> items) {
     categoryData[key].newsList.addAll(items);

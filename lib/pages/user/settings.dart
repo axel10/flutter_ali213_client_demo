@@ -13,39 +13,34 @@ class SettingsWidget extends StatefulWidget {
 class SettingsWidgetState extends State<SettingsWidget> {
   @override
   Widget build(BuildContext context) {
-    Widget createSection({@required Widget child}) {
-      return new Container(
-        child: child,
-        color: Colors.white,
-        margin: EdgeInsets.only(bottom: 5),
-      );
-    }
-
     /// 创建第三大行内的小行
-    Widget createRow(
-        {@required Widget child, @required GestureTapCallback onTap}) {
-      return new InkWell(
-        child: new Container(
-          padding: EdgeInsets.symmetric(horizontal: Config.horizontalPadding),
-          child: child,
-        ),
-        onTap: onTap,
-      );
-    }
-
     return new Scaffold(
       appBar: Utils.createYXAppBar(title: '设置'),
-      body: createSection(
-          child: createRow(
-              child: new Row(
-                children: <Widget>[
-                  new Text(
-                    '退出登录',
-                    style: TextStyle(color: Colors.red),
-                  )
-                ],
-              ),
-              onTap: handleLogout)),
+      body: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: InkWell(
+                  onTap: handleLogout,
+                  child: new Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    child: Center(
+                      child: Text(
+                        '退出登录',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -61,13 +56,13 @@ class SettingsWidgetState extends State<SettingsWidget> {
                 children: <Widget>[
                   new SimpleDialogOption(
                     onPressed: () {
-                      Navigator.pop(context, true);
+                      Navigator.pop(ctx, true);
                     },
                     child: Text('是'),
                   ),
                   new SimpleDialogOption(
                     onPressed: () {
-                      Navigator.pop(context, false);
+                      Navigator.pop(ctx, false);
                     },
                     child: Text('否'),
                   )
@@ -79,7 +74,7 @@ class SettingsWidgetState extends State<SettingsWidget> {
       var model = UserModel.of(context);
       Utils.setLocalStorage(Config.USER_TOKEN_KEY, null);
       model.setToken(null);
-      model.setUserInfo(Utils.getDefaultUser());
+      model.setLoginUserInfo(Utils.getDefaultLoginUserInfo());
     }
   }
 }

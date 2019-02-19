@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youxia/model/user.dart';
+import 'package:youxia/pages/login/type/LoginResponse.dart';
 import 'package:youxia/service/userService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -109,22 +110,24 @@ class LoginWidgetState extends State<LoginWidget> {
     var _form = _formKey.currentState;
     if (_form.validate()) {
       _form.save();
-      var json =
+      var responseStr =
           await UserService.login(username: _username, password: _password);
+      var response = LoginResponse(responseStr);
       // 如果成功
-      if (json.status == 1) {
+      if (response.status == 1) {
         var model = UserModel.of(context);
-        var userInfo = json.data.userinfo;
-//        model.setLoginUserInfo(userInfo);
+        LoginUserInfo loginUserInfo = response.data.userinfo;
+        model.setLoginUserInfo(loginUserInfo);
         //存储token到模型
-        model.setToken(json.data.token);
+        model.setToken(response.data.token);
         //存储头像到模型
-        model.setAvatar(userInfo.avatar);
+//        model.setAvatar(userInfo.avatar);
         var prefs = await SharedPreferences.getInstance();
         //存储token到本地
-        prefs.setString(Config.USER_TOKEN_KEY, json.data.token);
-        //存储头像到本地
-        prefs.setString(Config.USER_AVATAR_KEY, userInfo.avatar);
+        prefs.setString(Config.USER_TOKEN_KEY, response.data.token);
+        //存储用户数据到本地
+        prefs.setString(Config.USER_DATA_KEY, responseStr);
+
         Fluttertoast.showToast(
             msg: '登陆成功',
             toastLength: Toast.LENGTH_SHORT,
@@ -132,7 +135,7 @@ class LoginWidgetState extends State<LoginWidget> {
         Navigator.pop(context);
       } else {
         Fluttertoast.showToast(
-            msg: json.msg,
+            msg: response.msg,
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM);
       }

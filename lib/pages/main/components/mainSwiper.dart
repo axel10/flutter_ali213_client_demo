@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:youxia/pages/main/model/news.dart';
 import 'package:youxia/pages/main/types/newsItem.dart';
+import 'package:youxia/utils/utils.dart';
 
 class MainSwiper extends StatefulWidget {
   MainSwiper(this._key);
@@ -57,8 +58,8 @@ class MainSwiperState extends State<MainSwiper> {
                           controller: _pageController,
                           children: list.map((o) {
                             return new Container(
-                              child: Image.network(
-                                o.pic.isEmpty
+                              child: Utils.getCacheImage(
+                                imageUrl: o.pic.isEmpty
                                     ? 'http://via.placeholder.com/350x150'
                                     : o.pic,
                                 fit: BoxFit.cover,

@@ -20,7 +20,7 @@ class NewsDetailItem {
   String shareurl;
   String xgword;
   String zlname;
-  List<RecommendList> xgwz;
+  List<RecommendArticleListItem> xgwz;
   GameInfo odayinfo;
 
   NewsDetailItem.fromParams(
@@ -75,7 +75,7 @@ class NewsDetailItem {
     xgwz = jsonRes['xgwz'] == null ? null : [];
 
     for (var xgwzItem in xgwz == null ? [] : jsonRes['xgwz']) {
-      xgwz.add(xgwzItem == null ? null : new RecommendList.fromJson(xgwzItem));
+      xgwz.add(xgwzItem == null ? null : new RecommendArticleListItem.fromJson(xgwzItem));
     }
 
     odayinfo = jsonRes['odayinfo'] == null
@@ -107,7 +107,7 @@ class GameInfo {
   }
 }
 
-class RecommendList {
+class RecommendArticleListItem {
   String addtime;
   String className;
   String id;
@@ -116,7 +116,7 @@ class RecommendList {
   String title;
   String url;
 
-  RecommendList.fromParams(
+  RecommendArticleListItem.fromParams(
       {this.addtime,
       this.className,
       this.id,
@@ -125,7 +125,7 @@ class RecommendList {
       this.title,
       this.url});
 
-  RecommendList.fromJson(jsonRes) {
+  RecommendArticleListItem.fromJson(jsonRes) {
     addtime = jsonRes['addtime'];
     className = jsonRes['class'];
     id = jsonRes['id'];

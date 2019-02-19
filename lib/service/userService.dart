@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:youxia/pages/login/type/LoginResponse.dart';
 import 'package:youxia/type/UpdateTokenResponse.dart';
 import 'package:youxia/type/UserInfo.dart';
 import 'package:youxia/utils/config.dart';
@@ -9,7 +8,7 @@ import 'package:youxia/utils/utils.dart';
 import 'package:crypto/crypto.dart';
 
 class UserService {
-  static Future<LoginResponse> login({String username, String password}) async {
+  static Future<String> login({String username, String password}) async {
     var time = Utils.getTimeToken();
     var privateKey = r"BGg)K6ng4?&x9sCIuO%C2%{@TJ?fnFJ,bZKy/[/EWnw9UsC$@1";
 
@@ -21,7 +20,7 @@ class UserService {
         '&username=$username&passwd=$password&from=feedearn&time=$time'
         '&signature=$signature';
     var result = await Request.get('http://i.ali213.net/api.html$qs');
-    return LoginResponse(result);
+    return result;
   }
 
   /// 更新token
@@ -32,7 +31,7 @@ class UserService {
 
   ///通过存储在本地的token获得用户信息。
   static Future<UserInfo> getUserInfo() async {
-    var token = await Utils.getLocalStorage(Config.USER_TOKEN_KEY);
+    var token =  Utils.getLocalStorage(Config.USER_TOKEN_KEY);
     if(token==null){
       return null;
     }

@@ -41,7 +41,7 @@ class CommentItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new ClipRRect(
-            borderRadius: BorderRadius.circular(headerSize/2),
+            borderRadius: BorderRadius.circular(headerSize / 2),
             child: new Image.network(
               headImgUrl,
               fit: BoxFit.cover,
@@ -59,7 +59,8 @@ class CommentItem extends StatelessWidget {
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      new Column(
+                      new Flexible(
+                          child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         // 用户名与来源
                         children: <Widget>[
@@ -67,9 +68,13 @@ class CommentItem extends StatelessWidget {
                             username,
                             style: TextStyle(fontSize: 14),
                           ),
-                          Text(label),
+                          Text(
+                            label,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 12,color: Colors.grey),
+                          ),
                         ],
-                      ),
+                      )),
                       new Container(
                         // 回复小图标
                         child: Row(

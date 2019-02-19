@@ -11,7 +11,7 @@ class Categorys {
   Categorys.fromJson(jsonRes) {
     list = jsonRes == null ? null : [];
 
-    for (var listItem in list == null ? [] : jsonRes['list']){
+    for (var listItem in list == null ? [] : list){
       list.add(listItem == null ? null : new Category.fromJson(listItem));
     }
   }
