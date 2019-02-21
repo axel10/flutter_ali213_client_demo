@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youxia/pages/main/detail/components/recommendItem.dart';
+import 'package:youxia/pages/main/newsDetail/components/recommendItem.dart';
 import 'package:youxia/pages/main/types/newsDetailItem.dart';
 import 'package:youxia/utils/utils.dart';
 

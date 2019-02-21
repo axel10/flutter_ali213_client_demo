@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:youxia/pages/guide/pages/guideDetail/components/TagsSection2.dart';
 import 'package:youxia/pages/guide/pages/guideDetail/components/sectionContent.dart';
 import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/type/GuideArticle.dart';
-import 'package:youxia/pages/main/detail/components/articleBottomBar.dart';
-import 'package:youxia/pages/main/detail/components/collectionIconButton.dart';
-import 'package:youxia/pages/main/detail/components/commentButton.dart';
-import 'package:youxia/pages/main/detail/components/commentSection.dart';
-import 'package:youxia/pages/main/detail/components/recommendItem.dart';
+import 'package:youxia/pages/main/newsDetail/components/articleBottomBar.dart';
+import 'package:youxia/pages/main/newsDetail/components/collectionIconButton.dart';
+import 'package:youxia/pages/main/newsDetail/components/commentButton.dart';
+import 'package:youxia/pages/main/newsDetail/components/commentSection.dart';
+import 'package:youxia/pages/main/newsDetail/components/recommendItem.dart';
 import 'package:youxia/pages/main/types/newsCommentData.dart';
 import 'package:youxia/service/mainService.dart';
 import 'package:youxia/utils/config.dart';
@@ -184,6 +184,7 @@ class GuideArticlePageState extends State<GuideArticlePage> {
               scaffoldContext: context,
               iconSlot: [
                 CollectionIconButton(
+                  cover: articleData.odayinfo.img,
                   addtime: articleData.addtime,
                   className: articleData.className,
                   id: articleId,

@@ -24,11 +24,6 @@ class CommentInputState extends State<CommentInput> {
   bool sending = false;
 
   @override
-  void initState() {
-    print(widget.appId);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,

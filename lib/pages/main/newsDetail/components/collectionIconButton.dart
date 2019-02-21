@@ -17,7 +17,7 @@ class CollectionIconButton extends StatefulWidget {
       {Key key,
       @required this.id,
       @required this.addtime,
-      this.cover,
+      @required this.cover,
       @required this.title,
       @required this.className})
       : super(key: key);
@@ -51,7 +51,7 @@ class CollectionIconButtonState extends State<CollectionIconButton> {
       // 当前文章未收藏
       // 根据类别向list里添加新的收藏数据
       var newItem = key == Config.GUIDE_COLLECTION_LIST_KEY
-          ? new GuideCollectionItem(
+          ? new GuideListItem(
               title: widget.title, time: widget.addtime, ID: widget.id)
           : new ArticleCollectionItem(
               title: widget.title,

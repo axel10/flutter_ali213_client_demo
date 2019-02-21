@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:youxia/pages/guide/pages/guideSearch/model/search.dart';
+import 'package:youxia/pages/search/model/search.dart';
 import 'package:youxia/pages/main/model/news.dart';
 import 'package:youxia/pages/main/components/tab.dart';
 import 'package:youxia/pages/main/types/category.dart';

@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:youxia/components/loadMore.dart';
 import 'package:youxia/pages/guide/components/ImgListItem.dart';
-import 'package:youxia/pages/guide/components/searchInput2.dart';
+import 'package:youxia/pages/guide/components/searchInput.dart';
 import 'package:youxia/pages/guide/model/guide.dart';
 import 'package:youxia/pages/guide/pages/guideDetail/index.dart';
-import 'package:youxia/pages/guide/pages/guideSearch/index.dart';
+import 'package:youxia/pages/search/guideSubjectSearch.dart';
 import 'package:youxia/service/mainService.dart';
-import 'package:youxia/type/types.dart';
 import 'package:youxia/utils/config.dart';
 import 'package:youxia/utils/utils.dart';
 
@@ -63,29 +62,31 @@ class GuidePageState extends State<GuidePage> {
               child: Column(
             children: <Widget>[
               //顶部搜索栏
-              Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(width: 1, color: Colors.grey))),
-                padding: EdgeInsets.symmetric(
-                    horizontal: Config.horizontalPadding, vertical: 12),
-                child: SearchInputWidget(
-                  leftArea: Icon(
-                    Icons.search,
-                    color: Colors.grey,
-                    size: 18,
+              InkWell(
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(width: 1, color: Colors.grey))),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Config.horizontalPadding, vertical: 12),
+                  child: SearchInputWidget(
+                    leftArea: Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                      size: 18,
+                    ),
+                    border: Border.all(width: 1, color: Colors.grey),
+                    enabled: false,
+                    hintText: '',
+
                   ),
-                  border: Border.all(width: 1, color: Colors.grey),
-                  enabled: false,
-                  hintText: '',
-                  onTap: () {
-                    Navigator.of(context).push(Utils.getRouter(builder: (ctx) {
-                      return GuideSearchPage(
-                        enterPosition: EnterPosition.guide,
-                      );
-                    }));
-                  },
                 ),
+                onTap: () {
+                  Navigator.of(context).push(Utils.getRouter(builder: (ctx) {
+                    print('tap');
+                    return GuideSearchPage();
+                  }));
+                },
               ),
               //下拉列表行
               Container(
@@ -153,9 +154,7 @@ class GuidePageState extends State<GuidePage> {
 
   void handleTypeChange(int type) {
     this._orderBy = type;
-//    var addtime = GuideModel.of(context).getGuideListLastAddTime();
     MainService.getGuides(orderBy: type, addtime: '').then((items) {
-      print(items);
       GuideModel.of(context).setGuideList(items);
     });
   }

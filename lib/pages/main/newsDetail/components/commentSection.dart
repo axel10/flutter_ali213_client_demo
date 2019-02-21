@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:youxia/pages/main/detail/components/ArticleSectionTitle.dart';
-import 'package:youxia/pages/main/detail/components/commentItem.dart';
+import 'package:youxia/pages/main/newsDetail/components/ArticleSectionTitle.dart';
+import 'package:youxia/pages/main/newsDetail/components/commentItem.dart';
 import 'package:youxia/pages/main/types/newsCommentData.dart';
 import 'package:youxia/utils/utils.dart';
 

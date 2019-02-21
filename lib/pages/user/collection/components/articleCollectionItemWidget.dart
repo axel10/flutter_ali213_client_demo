@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youxia/type/ArticleCollectionItem.dart';
+import 'package:youxia/utils/utils.dart';
 
 double contentPadding = 10;
 double normalContentHeight = 90;
@@ -60,8 +61,8 @@ class ArticleCollectionItemWidget extends StatelessWidget {
                   new Container(
                     width: 120,
                     height: normalContentHeight,
-                    child: Image.network(
-                      item.cover,
+                    child: Utils.getCacheImage(
+                      imageUrl: item.cover,
                       fit: BoxFit.cover,
                     ),
                   )

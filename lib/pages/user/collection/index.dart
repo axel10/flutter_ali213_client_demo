@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/index.dart';
-import 'package:youxia/pages/main/detail/index.dart';
+import 'package:youxia/pages/main/newsDetail/index.dart';
 import 'package:youxia/pages/user/collection/components/articleCollectionItemWidget.dart';
 import 'package:youxia/pages/user/collection/components/guideCollectionItemWidget.dart';
 import 'package:youxia/type/ArticleCollectionItem.dart';
@@ -22,7 +22,7 @@ class ArticleCollectionState extends State<ArticleCollection>
   TabController _tabController;
 
   List<ArticleCollectionItem> newsList = [];
-  List<GuideCollectionItem> guideList = [];
+  List<GuideListItem> guideList = [];
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class ArticleCollectionState extends State<ArticleCollection>
         guideList = (json.decode(
                     prefs.getString(Config.GUIDE_COLLECTION_LIST_KEY) ?? '[]')
                 as List)
-            .map((o) => GuideCollectionItem.fromJson(o))
+            .map((o) => GuideListItem.fromJson(o))
             .toList();
       });
     });
@@ -69,9 +69,12 @@ class ArticleCollectionState extends State<ArticleCollection>
       appBar: Utils.createYXAppBar(title: '我的收藏', actions: <Widget>[
         new InkWell(
           onTap: clearCollection,
-          child: Text(
-            '清空',
-            style: TextStyle(color: Colors.black),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 12,horizontal: 10),
+            child: Text(
+              '清空',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
         )
       ]),
@@ -155,13 +158,13 @@ class ArticleCollectionState extends State<ArticleCollection>
                 children: <Widget>[
                   new SimpleDialogOption(
                     onPressed: () {
-                      Navigator.pop(context, true);
+                      Navigator.pop(ctx, true);
                     },
                     child: Text('是'),
                   ),
                   new SimpleDialogOption(
                     onPressed: () {
-                      Navigator.pop(context, false);
+                      Navigator.pop(ctx, false);
                     },
                     child: Text('否'),
                   )

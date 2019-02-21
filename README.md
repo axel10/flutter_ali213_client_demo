@@ -1,6 +1,7 @@
 # youxia
 
-A new Flutter project.
+游侠客户端的flutter实现。
+完成了新闻功能
 
 ## Getting Started
 

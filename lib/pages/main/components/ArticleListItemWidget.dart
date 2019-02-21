@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youxia/pages/main/detail/index.dart';
+import 'package:youxia/pages/main/newsDetail/index.dart';
 import 'package:youxia/pages/main/types/newsItem.dart';
 import 'package:youxia/utils/utils.dart';
 
@@ -15,7 +15,6 @@ enum ArticleListItemType { normal, images, ad }
 class ArticleListItemWidget extends StatelessWidget {
   final NewsItem item;
   ArticleListItemWidget(this.item);
-
   @override
   Widget build(BuildContext context) {
     Widget result;
@@ -119,10 +118,10 @@ class ArticleListItemWidget extends StatelessWidget {
                           new Row(
                             children: <Widget>[
                               //时间
-                              Text(
+                              item.time.isNotEmpty?Text(
                                 Utils.getCurrentTimeStringByAddTime(item.time),
                                 style: itemFooterStyle,
-                              ),
+                              ):Utils.getEmptyContainer(),
                               Container(
                                 child: Row(
                                   children: <Widget>[
@@ -163,10 +162,6 @@ class ArticleListItemWidget extends StatelessWidget {
         height: 0,
       );
     }
-
-
-//    return result;
-
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (ctx) {

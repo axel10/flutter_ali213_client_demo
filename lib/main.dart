@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+//import 'package:youxia/components/Stars.dart';
 import 'package:youxia/model/ui.dart';
 import 'package:youxia/model/user.dart';
 import 'package:youxia/pages/guide/index.dart';
 import 'package:youxia/pages/guide/model/guide.dart';
 import 'package:youxia/pages/guide/pages/guideDetail/model/guideDetail.dart';
 import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/model/guideArticle.dart';
-import 'package:youxia/pages/guide/pages/guideSearch/index.dart';
-import 'package:youxia/pages/guide/pages/guideSearch/model/search.dart';
 import 'package:youxia/pages/main/index.dart';
+import 'package:youxia/pages/search/complexSearch.dart';
+import 'package:youxia/pages/search/model/search.dart';
 import 'package:youxia/pages/main/model/detail.dart';
 import 'package:youxia/pages/main/model/news.dart';
 import 'package:youxia/pages/user/index.dart';
 import 'package:youxia/service/userService.dart';
-import 'package:youxia/type/types.dart';
 import 'package:youxia/utils/config.dart';
 import 'package:youxia/utils/utils.dart';
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   State<StatefulWidget> createState() {
     return MyAppState();
@@ -43,9 +42,6 @@ class MyAppState extends State<MyApp> with TickerProviderStateMixin {
       UserService.updateToken(oldToken: token).then((d) {
         model.setToken(d.token);
       }).catchError((e) {});
-/*        UserService.getUserInfo().then((d) {
-          model.setUserInfo(d);
-        });*/
     }
 
     _indexAnimationCtl = new AnimationController(
@@ -59,6 +55,12 @@ class MyAppState extends State<MyApp> with TickerProviderStateMixin {
     var uiModel = UIModel.of(context);
     uiModel.setIndexScrollController(_indexAnimationCtl);
     uiModel.expandIndexAppbar();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _indexAnimationCtl.dispose();
   }
 
   @override
@@ -145,7 +147,7 @@ class MyAppState extends State<MyApp> with TickerProviderStateMixin {
                                       ),
                                       onPressed: (){
                                         Navigator.of(context).push(Utils.getRouter(builder: (ctx){
-                                          return GuideSearchPage(enterPosition: EnterPosition.news,);
+                                          return ComplexSearchPage();
                                         }));
                                       },
                                     )
@@ -171,11 +173,6 @@ class MyAppState extends State<MyApp> with TickerProviderStateMixin {
         ));
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _indexAnimationCtl.dispose();
-  }
 }
 
 //GuideDetailModel

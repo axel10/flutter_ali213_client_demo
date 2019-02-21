@@ -6,15 +6,15 @@ part of 'GuideCollectionItem.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GuideCollectionItem _$GuideCollectionItemFromJson(Map<String, dynamic> json) {
-  return GuideCollectionItem(
+GuideListItem _$GuideCollectionItemFromJson(Map<String, dynamic> json) {
+  return GuideListItem(
       title: json['title'] as String,
       time: json['time'] as String,
       ID: json['ID'] as String);
 }
 
 Map<String, dynamic> _$GuideCollectionItemToJson(
-        GuideCollectionItem instance) =>
+        GuideListItem instance) =>
     <String, dynamic>{
       'title': instance.title,
       'time': instance.time,

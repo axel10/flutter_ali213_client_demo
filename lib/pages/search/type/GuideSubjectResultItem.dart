@@ -1,6 +1,6 @@
 import 'dart:convert' show json;
 
-class SearchResultItem {
+class GuideSubjectResultItem {
 
   String addtime;
   String glzoid;
@@ -8,11 +8,11 @@ class SearchResultItem {
   String keyword;
   String title;
 
-  SearchResultItem.fromParams({this.addtime, this.glzoid, this.img, this.keyword, this.title});
+  GuideSubjectResultItem.fromParams({this.addtime, this.glzoid, this.img, this.keyword, this.title});
 
-  factory SearchResultItem(jsonStr) => jsonStr == null ? null : jsonStr is String ? new SearchResultItem.fromJson(json.decode(jsonStr)) : new SearchResultItem.fromJson(jsonStr);
+  factory GuideSubjectResultItem(jsonStr) => jsonStr == null ? null : jsonStr is String ? new GuideSubjectResultItem.fromJson(json.decode(jsonStr)) : new GuideSubjectResultItem.fromJson(jsonStr);
 
-  SearchResultItem.fromJson(jsonRes) {
+  GuideSubjectResultItem.fromJson(jsonRes) {
     addtime = jsonRes['addtime'];
     glzoid = jsonRes['glzoid'];
     img = jsonRes['img'];

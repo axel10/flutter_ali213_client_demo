@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youxia/pages/guide/types/GuideDetail.dart';
 import 'package:youxia/pages/login/type/LoginResponse.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:youxia/pages/main/detail/components/commentInput.dart';
+import 'package:youxia/pages/main/newsDetail/components/commentInput.dart';
 
 class Utils {
   static SharedPreferences _prefs;

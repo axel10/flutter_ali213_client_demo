@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:youxia/type/GuideCollectionItem.dart';
 
-
-
 class GuideCollectionItemWidget extends StatelessWidget {
-  final GuideCollectionItem item;
-
+  final GuideListItem item;
   const GuideCollectionItemWidget({Key key,@required this.item}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

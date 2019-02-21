@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:youxia/pages/main/detail/components/articleBottomBar.dart';
-import 'package:youxia/pages/main/detail/components/collectionIconButton.dart';
-import 'package:youxia/pages/main/detail/components/commentButton.dart';
-import 'package:youxia/pages/main/detail/components/commentSection.dart';
-import 'package:youxia/pages/main/detail/components/recommendSection.dart';
+import 'package:youxia/pages/main/newsDetail/components/articleBottomBar.dart';
+import 'package:youxia/pages/main/newsDetail/components/collectionIconButton.dart';
+import 'package:youxia/pages/main/newsDetail/components/commentButton.dart';
+import 'package:youxia/pages/main/newsDetail/components/commentSection.dart';
+import 'package:youxia/pages/main/newsDetail/components/recommendSection.dart';
 import 'package:youxia/pages/main/model/detail.dart';
 import 'package:youxia/service/mainService.dart';
 import 'package:youxia/utils/config.dart';
@@ -61,12 +61,6 @@ class NewsDetailPageState extends State<NewsDetailPage> {
       model.setComments(o.data);
     });
 
-    Future.delayed(Duration(seconds: 3)).then((d) {
-      print(_commentListKey.currentContext);
-//      Scrollable.ensureVisible(_commentListKey.currentContext);
-    });
-
-//    WidgetsBinding.instance.addPostFrameCallback((_)=>bindCommentContext());
   }
 
   @override
@@ -230,6 +224,7 @@ class NewsDetailPageState extends State<NewsDetailPage> {
                   scaffoldContext: context,
                   iconSlot: [
                     CollectionIconButton(
+                      cover: item.cover,
                       addtime: item.addtime,
                       className: item.className,
                       id: id,
@@ -320,12 +315,5 @@ class NewsDetailPageState extends State<NewsDetailPage> {
     });
   }
 
-  BuildContext _commentContext;
 
-  bindCommentContext() {
-    setState(() {
-      _commentContext = _commentListKey.currentContext;
-      print(_commentContext);
-    });
-  }
 }

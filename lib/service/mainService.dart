@@ -1,13 +1,14 @@
 import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/type/GuideArticle.dart';
 import 'package:youxia/pages/guide/pages/guideDetail/type/GuideTagArticleList.dart';
-import 'package:youxia/pages/guide/pages/guideSearch/type/SearchResultItem.dart';
+import 'package:youxia/pages/search/type/GuideSubjectResultItem.dart';
+import 'package:youxia/pages/search/type/ComplexSearchResult.dart';
 import 'package:youxia/pages/guide/types/GuideDetail.dart';
 import 'package:youxia/pages/guide/types/GuideIndexListItem.dart';
 import 'package:youxia/pages/main/types/category.dart';
 import 'package:youxia/pages/main/types/newsCommentData.dart';
 import 'package:youxia/pages/main/types/newsDetailItem.dart';
 import 'package:youxia/type/Result.dart';
-import 'package:youxia/pages/guide/pages/guideSearch/type/SearchHotWord.dart';
+import 'package:youxia/pages/search/type/SearchHotWord.dart';
 import 'package:youxia/utils/config.dart';
 import 'package:youxia/utils/request.dart';
 import 'package:youxia/pages/main/types/newsItem.dart';
@@ -69,7 +70,6 @@ class MainService {
       }).toList();
     } catch (e) {
       Utils.showErrorToast();
-      print(Utils.getLocalStorage(Config.CATEGORY_CACHE_KEY));
       var res = Utils.getLocalStorage(Config.CATEGORY_CACHE_KEY) ?? '[]';
       return (json.decode(res) as List).map((o) {
         return Category.fromJson(o);
@@ -155,14 +155,55 @@ class MainService {
         await Request.get('http://3g.ali213.net/app/gl/gethotword'));
   }
 
-  static Future<List<SearchResultItem>> getSearchResultList(
+  static Future<List<GuideSubjectResultItem>> getGuideSubjectSearchResultList(
       {@required String word, int length = 12}) async {
     var encodedWord = Uri.encodeFull(word);
     return (json.decode(await Request.get(
                 'http://3g.ali213.net/app/gl/appglzjpcsearch?keyword=$encodedWord&addtime=&length=$length'))
             as List)
         .map((item) {
-      return SearchResultItem.fromJson(item);
+      return GuideSubjectResultItem.fromJson(item);
     }).toList();
   }
+
+  //综合搜索，返回新闻、攻略、游戏三个搜索结果
+  static Future<ComplexSearchResult> getComplexSearchResult({String word}) async {
+    var encodedWord = Uri.encodeFull(word);
+    return ComplexSearchResult(await Request.get(
+        'http://api3.ali213.net/search/getAll?keyword=$encodedWord'));
+  }
+  //新闻无限加载
+  static Future<List<NewsSearchResultItem>> getNewsSearchResultList(
+      {@required String word, int page = 2}) async {
+    var encodedWord = Uri.encodeFull(word);
+    return (json.decode(await Request.get(
+        'http://api3.ali213.net/search/getNews?keyword=$encodedWord&page=$page'))
+    as List)
+        .map((item) {
+      return NewsSearchResultItem.fromJson(item);
+    }).toList();
+  }
+  //攻略无限加载
+  static Future<List<GuideSearchResultItem>> getGuideSearchResultList(
+      {@required String word, int page = 2}) async {
+    var encodedWord = Uri.encodeFull(word);
+    return (json.decode(await Request.get(
+        'http://api3.ali213.net/search/getGl?keyword=$encodedWord&page=$page'))
+    as List)
+        .map((item) {
+      return GuideSearchResultItem.fromJson(item);
+    }).toList();
+  }
+  //游戏无限加载
+  static Future<List<GameSearchResultItem>> getGameSearchResultList(
+      {@required String word, int page = 2}) async {
+    var encodedWord = Uri.encodeFull(word);
+    return (json.decode(await Request.get(
+        'http://api3.ali213.net/search/getNews?keyword=$encodedWord&page=$page'))
+    as List)
+        .map((item) {
+      return GameSearchResultItem.fromJson(item);
+    }).toList();
+  }
+
 }

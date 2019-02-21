@@ -22,8 +22,10 @@ class Config {
   static const NEWS_COLLECTION_LIST_KEY = 'news_list';
   static const GUIDE_COLLECTION_LIST_KEY = 'guide_list';
 
-  static const SEARCH_WORD = 'SEARCH_WORD';
+  static const GUIDE_SEARCH_HISTORY_WORD = 'SEARCH_WORD';
 
   static const GUIDE_APP_ID = '5';
   static const NEWS_APP_ID = '1';
+
+  static const NEWS_SEARCH_HISTORY = 'NEWS_SEARCH_HISTORY';
 }
