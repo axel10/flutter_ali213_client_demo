@@ -1,5 +1,5 @@
-import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/type/GuideArticle.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/type/GuideTagArticleList.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/guideArticle/type/GuideArticle.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/type/GuideTagArticleList.dart';
 import 'package:youxia/pages/search/type/GuideSubjectResultItem.dart';
 import 'package:youxia/pages/search/type/ComplexSearchResult.dart';
 import 'package:youxia/pages/guide/types/GuideDetail.dart';
@@ -103,7 +103,7 @@ class MainService {
   }
 
   ///获取攻略详情列表
-  static Future<GuideDetail> getGuideDetail(String id) async {
+  static Future<GuideDetail> getGuideSubjectDetail(String id) async {
     return GuideDetail(await Request.get(
         'http://3g.ali213.net/app/gl/appglzjpcdetail?id=$id'));
   }

@@ -12,6 +12,7 @@ import 'package:youxia/utils/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:flutter_html/flutter_html.dart';
 
 class NewsDetailPage extends StatefulWidget {
   @override
@@ -60,38 +61,44 @@ class NewsDetailPageState extends State<NewsDetailPage> {
       var model = NewsDetailModel.of(context);
       model.setComments(o.data);
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
         builder: (context, child, NewsDetailModel model) {
-      var item = model.item;
-      var comments = model.comments ??= [];
+          var item = model.item;
+          var comments = model.comments ??= [];
 
-      // 如果数据还没准备好则返回空scaffold
-      if (item == null) {
-        return Scaffold();
-      }
-      // 获取title
-      var title = new Text(
-        item.Title,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-      );
-      // 获取文章信息
-      var articleInfo = new Container(
-          child: Row(
-        children: <Widget>[
-          Container(
-            child: Text(
-              '${item.addtime} 来源：${item.resource}',
-              style: TextStyle(color: Colors.grey, fontSize: 10),
-            ),
-          ),
-        ],
-      ));
-      List<Widget> htmlToWidget(String html) {
+          // 如果数据还没准备好则返回空scaffold
+          if (item == null) {
+            return Scaffold();
+          }
+          // 获取title
+          var title = new Text(
+            item.Title,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          );
+          // 获取文章信息
+          var articleInfo = new Container(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      '${item.addtime} 来源：${item.resource}',
+                      style: TextStyle(color: Colors.grey, fontSize: 10),
+                    ),
+                  ),
+                ],
+              ));
+
+         item.Content = item.Content.replaceAllMapped(
+              new RegExp(r'<img[\s\S].*?data-original="(.*?)"[\s\S].*?/>'),
+                  (m) => """
+                  <img src="${m[1]}"></img>
+                  """);
+
+          /*List<Widget> htmlToWidget(String html) {
         if (html == null || html.isEmpty) {
           return [
             Container(
@@ -143,147 +150,148 @@ class NewsDetailPageState extends State<NewsDetailPage> {
           }
           return Text(str);
         }).toList();
-      }
+      }*/
 
-      //转换富文本
-      var contentWidget = htmlToWidget(item.Content);
+          //转换富文本
+//      var contentWidget = htmlToWidget(item.Content);
+          var contentWidget = Html(data: item.Content,);
 
-      return Scaffold(
-        appBar: Utils.createYXAppBar(),
-        body: Stack(
-          alignment: AlignmentDirectional.topStart,
-          children: <Widget>[
-            new Column(
+          return Scaffold(
+            appBar: Utils.createYXAppBar(),
+            body: Stack(
+              alignment: AlignmentDirectional.topStart,
               children: <Widget>[
-                Expanded(
-                  child: new ListView(
-                    padding: EdgeInsets.all(10),
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      title,
-                      articleInfo,
-                      // 文章主体
-                      Column(
-                        children: contentWidget,
-                      ),
-                      // 点赞按钮
-                      new Padding(
-                        key: _commentListKey,
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        child: new Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new InkWell(
-                              onTap: like,
-                              child: new Container(
-                                height: 40,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    border:
-                                        Border.all(width: 1, color: Colors.red),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: new Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Icon(
-                                      this._isLiked
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      color: Colors.red,
-                                    ),
-                                    Text(
-//                                item.dzan + '人喜欢',
-                                      this._isLiked ? '您已点赞' : '点赞',
-                                      style: TextStyle(color: Colors.red),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      new Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                new Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: new ListView(
+                        padding: EdgeInsets.all(10),
+                        shrinkWrap: true,
                         children: <Widget>[
-                          //推荐文章列表
-                          RecommendSection(item.xgwz),
-                          //评论列表
-                          CommentSection(
-                            comments,
+                          title,
+                          articleInfo,
+                          // 文章主体
+                          contentWidget,
+                          // 点赞按钮
+                          new Padding(
+                            key: _commentListKey,
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            child: new Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                new InkWell(
+                                  onTap: like,
+                                  child: new Container(
+                                    height: 40,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        border:
+                                        Border.all(width: 1, color: Colors.red),
+                                        borderRadius: BorderRadius.circular(
+                                            20)),
+                                    child: new Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Icon(
+                                          this._isLiked
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: Colors.red,
+                                        ),
+                                        Text(
+//                                item.dzan + '人喜欢',
+                                          this._isLiked ? '您已点赞' : '点赞',
+                                          style: TextStyle(color: Colors.red),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
+                          new Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              //推荐文章列表
+                              RecommendSection(item.xgwz),
+                              //评论列表
+                              CommentSection(
+                                comments,
+                              ),
+                            ],
+                          )
                         ],
-                      )
-                    ],
-                  ),
-                ),
-                // 底部评论栏
-                ArticleBottomBarWidget(
-                  commentListKey: _commentListKey,
-                  scaffoldContext: context,
-                  iconSlot: [
-                    CollectionIconButton(
-                      cover: item.cover,
-                      addtime: item.addtime,
-                      className: item.className,
-                      id: id,
-                      title: item.Title,
+                      ),
                     ),
-                    CommentIconButton(
-                      appId: Config.NEWS_APP_ID,
-                      commentCount: comments.length,
-                      onTap: () {
-                        Utils.showCommentInput(
+                    // 底部评论栏
+                    ArticleBottomBarWidget(
+                      commentListKey: _commentListKey,
+                      scaffoldContext: context,
+                      iconSlot: [
+                        CollectionIconButton(
+                          cover: item.cover,
+                          addtime: item.addtime,
+                          className: item.className,
+                          id: id,
+                          title: item.Title,
+                        ),
+                        CommentIconButton(
+                          appId: Config.NEWS_APP_ID,
+                          commentCount: comments.length,
+                          onTap: () {
+                            Utils.showCommentInput(
                                 context: context,
                                 appId: Config.NEWS_APP_ID,
                                 articleId: id,
                                 articleTitle: item.Title)
-                            .then((_) {
-                          MainService.getComments(id, appid: Config.NEWS_APP_ID)
-                              .then((o) {
-                            var model = NewsDetailModel.of(context);
-                            model.setComments(o.data);
-                          });
-                        });
-                      },
+                                .then((_) {
+                              MainService.getComments(
+                                  id, appid: Config.NEWS_APP_ID)
+                                  .then((o) {
+                                var model = NewsDetailModel.of(context);
+                                model.setComments(o.data);
+                              });
+                            });
+                          },
+                        )
+                      ],
+                      leftArea: InkWell(
+                        onTap: () {
+                          Utils.showCommentInput(
+                              context: context,
+                              appId: Config.NEWS_APP_ID,
+                              articleId: item.ID,
+                              articleTitle: item.Title);
+                        },
+                        child: new Container(
+                          padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                '写评论',
+                                style: TextStyle(color: Colors.grey),
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(3),
+                            border: Border.all(width: 1, color: Colors.grey),
+                          ),
+                        ),
+                      ),
+                      articleId: item.ID,
+                      appId: Config.NEWS_APP_ID,
                     )
                   ],
-                  leftArea: InkWell(
-                    onTap: () {
-                      Utils.showCommentInput(
-                          context: context,
-                          appId: Config.NEWS_APP_ID,
-                          articleId: item.ID,
-                          articleTitle: item.Title);
-                    },
-                    child: new Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            '写评论',
-                            style: TextStyle(color: Colors.grey),
-                          )
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(3),
-                        border: Border.all(width: 1, color: Colors.grey),
-                      ),
-                    ),
-                  ),
-                  articleId: item.ID,
-                  appId: Config.NEWS_APP_ID,
-                )
+                ),
               ],
             ),
-          ],
-        ),
-      );
-    });
+          );
+        });
   }
 
   like() {

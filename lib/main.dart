@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-//import 'package:youxia/components/Stars.dart';
 import 'package:youxia/model/ui.dart';
 import 'package:youxia/model/user.dart';
 import 'package:youxia/pages/guide/index.dart';
 import 'package:youxia/pages/guide/model/guide.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/model/guideDetail.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/model/guideArticle.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/model/guideDetail.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/guideArticle/model/guideArticle.dart';
 import 'package:youxia/pages/main/index.dart';
 import 'package:youxia/pages/search/complexSearch.dart';
 import 'package:youxia/pages/search/model/search.dart';

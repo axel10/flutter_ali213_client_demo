@@ -4,7 +4,7 @@ import 'package:youxia/components/loadMore.dart';
 import 'package:youxia/pages/guide/components/ImgListItem.dart';
 import 'package:youxia/pages/guide/components/searchInput.dart';
 import 'package:youxia/pages/guide/model/guide.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/index.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/index.dart';
 import 'package:youxia/pages/search/guideSubjectSearch.dart';
 import 'package:youxia/service/mainService.dart';
 import 'package:youxia/utils/config.dart';
@@ -137,8 +137,8 @@ class GuidePageState extends State<GuidePage> {
                       id: item.id,
                       onTap: (id) {
                         Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (ctx) {
-                          return GuideDetailPage(id);
+                            .push( Utils.getRouter(builder: (ctx) {
+                          return GuideSubjectPage(id);
                         }));
                       },
                     );

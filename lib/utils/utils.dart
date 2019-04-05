@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -231,8 +232,8 @@ class Utils {
     );
   }
 
-  static getRouter({WidgetBuilder builder}) {
-    return MaterialPageRoute(builder: builder);
+  static getRouter({@required WidgetBuilder builder}) {
+    return CupertinoPageRoute(builder:builder);
   }
 
   static List<List<T>> groupData<T>(List list, int count) {
@@ -268,4 +269,11 @@ class Utils {
 class MyColors {
   static Color alphaGray = Color.fromARGB(80, 0, 0, 0);
   static Color backgroundGray = Color.fromARGB(255, 240, 240, 240);
+}
+
+
+class SecondPageRoute extends CupertinoPageRoute {
+  SecondPageRoute(WidgetBuilder builder)
+      : super(builder:builder);
+
 }

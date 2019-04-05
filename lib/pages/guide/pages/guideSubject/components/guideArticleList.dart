@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/index.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/guideArticle/index.dart';
 import 'package:youxia/pages/guide/types/GuideDetail.dart';
 import 'package:youxia/utils/config.dart';
 import 'package:youxia/utils/utils.dart';

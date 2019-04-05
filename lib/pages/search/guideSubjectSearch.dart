@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:youxia/pages/guide/components/ImgListItem.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/index.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/index.dart';
 import 'package:youxia/pages/search/components/searchBasicWidget.dart';
 import 'package:youxia/pages/search/model/search.dart';
 import 'package:youxia/service/mainService.dart';
@@ -201,8 +201,8 @@ class GuideSearchPageState extends State<GuideSearchPage>
                   id: item.glzoid,
                   onTap: (id) {
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (ctx) {
-                      return GuideDetailPage(id);
+                        .push( Utils.getRouter(builder: (ctx) {
+                      return GuideSubjectPage(id);
                     }));
                   },
                 );

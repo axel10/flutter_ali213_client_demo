@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/TagsSection2.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/guideArticleList.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/sectionContent.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/type/GuideTagArticleList.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/TagsSection2.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/guideArticleList.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/sectionContent.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/type/GuideTagArticleList.dart';
 import 'package:youxia/pages/guide/types/GuideDetail.dart';
 import 'package:youxia/service/mainService.dart';
 import 'package:youxia/utils/utils.dart';

@@ -1,38 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/TagsSection2.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/guideArticleList.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/guideImgItem.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/guidePageListComponent.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/section.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/sectionContent.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/model/guideDetail.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/page/articleList/index.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/page/gallery/index.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/index.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/page/illustration/index.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/TagsSection2.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/guideArticleList.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/guideImgItem.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/guidePageListComponent.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/section.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/sectionContent.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/model/guideDetail.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/articleList/index.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/gallery/index.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/guideArticle/index.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/illustration/index.dart';
 import 'package:youxia/pages/guide/types/GuideDetail.dart';
 import 'package:youxia/service/mainService.dart';
 import 'package:youxia/utils/config.dart';
 import 'package:youxia/utils/utils.dart';
 
-class GuideDetailPage extends StatefulWidget {
-  GuideDetailPage(this._id);
+class GuideSubjectPage extends StatefulWidget {
+  GuideSubjectPage(this.id);
 
-  final String _id;
+  final String id;
 
   @override
   State<StatefulWidget> createState() {
-    return GuideDetailPageState(_id);
+    return GuideSubjectPageState();
   }
 }
 
-class GuideDetailPageState extends State<GuideDetailPage> {
-  final String _id;
+class GuideSubjectPageState extends State<GuideSubjectPage> {
   double _imgBlank = 10;
   ScrollController _scrollController;
-
-  GuideDetailPageState(this._id);
 
   int _pageNo = 2;
   bool _loading = false;
@@ -44,7 +41,7 @@ class GuideDetailPageState extends State<GuideDetailPage> {
     var model = GuideDetailModel.of(context);
     Utils.addInfinityLoadListener(_scrollController, () {
       if (!_loading) {
-        MainService.getNewGuideArticleList(id: _id, pageNo: _pageNo)
+        MainService.getNewGuideArticleList(id: widget.id, pageNo: _pageNo)
             .then((data) {
           setState(() {
             _pageNo += 1;
@@ -54,7 +51,7 @@ class GuideDetailPageState extends State<GuideDetailPage> {
       }
     }, 20);
 
-    MainService.getGuideDetail(_id).then((data) {
+    MainService.getGuideSubjectDetail(widget.id).then((data) {
       model.setGuideDetail(data);
     });
   }
@@ -306,7 +303,7 @@ class GuideDetailPageState extends State<GuideDetailPage> {
                                     SectionContentTitle(
                                       more: () {
                                         Navigator.of(context).push(
-                                            MaterialPageRoute(builder: (ctx) {
+                                            Utils.getRouter(builder: (ctx) {
                                               return GalleryPage(
                                                 data: _data.gallery,
                                               );
@@ -353,7 +350,7 @@ class GuideDetailPageState extends State<GuideDetailPage> {
                                         SectionContentTitle(
                                           more: () {
                                             Navigator.of(context).push(
-                                                MaterialPageRoute(
+                                                Utils.getRouter(
                                                     builder: (ctx) {
                                                       return IllustrationPage(
                                                         data: _data

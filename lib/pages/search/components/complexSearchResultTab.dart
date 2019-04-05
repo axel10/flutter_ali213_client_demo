@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/guideArticle/index.dart';
 import 'package:youxia/pages/search/model/search.dart';
 import 'package:youxia/pages/main/components/ArticleListItemWidget.dart';
 import 'package:youxia/pages/main/types/newsItem.dart';
@@ -94,31 +95,38 @@ class ComplexSearchResultTabState extends State<ComplexSearchResultTab>
       builder: (BuildContext context, Widget child, SearchModel model) {
         var result = model.complexSearchResult;
 
-        Widget createGuideItem(guide) => Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Config.horizontalPadding,vertical: 10),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                                width: 1, color: MyColors.backgroundGray))),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          guide.title,
-                        ),
-                        Text(
-                          guide.content,
-                          style: TextStyle(fontSize: 12,color: Colors.grey),
-                        )
-                      ],
-                    ),
+        Widget createGuideItem(GuideSearchResultItem guide) => InkWell(
+          onTap: (){
+            Navigator.of(context).push(Utils.getRouter(builder: (BuildContext context) {
+              return GuideArticlePage(articleId: guide.id.toString(),);
+            }));
+          },
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Config.horizontalPadding, vertical: 10),
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              width: 1, color: MyColors.backgroundGray))),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        guide.title,
+                      ),
+                      Text(
+                        guide.content,
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      )
+                    ],
                   ),
-                )
-              ],
-            );
+                ),
+              )
+            ],
+          ),
+        );
 
         Widget createGameItem(GameSearchResultItem game) => Container(
               height: 100,
@@ -267,6 +275,7 @@ class ComplexSearchResultTabState extends State<ComplexSearchResultTab>
                                 result.news.getRange(0, 3).map((news) {
                                   return ArticleListItemWidget(
                                       NewsItem.fromParams(
+                                          sid: news.id,
                                           title: news.title,
                                           id: news.id,
                                           pic: news.img,

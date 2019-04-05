@@ -164,7 +164,7 @@ class ArticleListItemWidget extends StatelessWidget {
     }
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (ctx) {
+        Navigator.push(context,  Utils.getRouter(builder: (ctx) {
           return new NewsDetailPage(item.sid);
         }));
       },

@@ -28,7 +28,7 @@ class UserPageState extends State<UserPage> {
         @required WidgetBuilder toPage}) {
       return new InkWell(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: toPage));
+          Navigator.push(context,  Utils.getRouter(builder: toPage));
         },
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +112,7 @@ class UserPageState extends State<UserPage> {
                           onTap: () {
                             Navigator.push(
                                 ctx,
-                                MaterialPageRoute(
+                                Utils.getRouter(
                                     builder: (ctx) => new LoginWidget()));
                           },
                         ),
@@ -165,7 +165,7 @@ class UserPageState extends State<UserPage> {
                         onTap: () {
                           Navigator.push(
                               ctx,
-                              MaterialPageRoute(
+                              Utils.getRouter(
                                   builder: (ctx) => new SettingsWidget()));
                         })),
                 new Expanded(

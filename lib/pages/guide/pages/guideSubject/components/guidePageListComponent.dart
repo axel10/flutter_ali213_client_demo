@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/index.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/guideArticle/index.dart';
 import 'package:youxia/pages/guide/types/GuideDetail.dart';
 import 'package:youxia/utils/config.dart';
 import 'package:youxia/utils/utils.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/components/guidePageViewIndicatorWidget.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/components/guidePageViewIndicatorWidget.dart';
 
 ///具体游戏攻略列表页攻略列表滑动控件
 class GuidePageListComponent extends StatefulWidget {
@@ -103,7 +103,7 @@ class GuidePageListComponentState extends State<GuidePageListComponent> {
                   child: Text(item.title),
                   onTap: () {
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (ctx) {
+                        .push( Utils.getRouter(builder: (ctx) {
                       return GuideArticlePage(
                         articleId: item.id.runtimeType == String
                             ? item.id

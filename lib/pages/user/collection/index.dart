@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youxia/pages/guide/pages/guideDetail/page/guideArticle/index.dart';
+import 'package:youxia/pages/guide/pages/guideSubject/page/guideArticle/index.dart';
 import 'package:youxia/pages/main/newsDetail/index.dart';
 import 'package:youxia/pages/user/collection/components/articleCollectionItemWidget.dart';
 import 'package:youxia/pages/user/collection/components/guideCollectionItemWidget.dart';
@@ -115,7 +115,7 @@ class ArticleCollectionState extends State<ArticleCollection>
                               child: new ArticleCollectionItemWidget(
                                 item: item,
                               ),
-                              route: MaterialPageRoute(
+                              route:  Utils.getRouter(
                                   builder: (ctx) =>
                                       new NewsDetailPage(item.ID)));
                         }).toList(),
@@ -134,7 +134,7 @@ class ArticleCollectionState extends State<ArticleCollection>
                         child: new GuideCollectionItemWidget(
                           item: item,
                         ),
-                        route: MaterialPageRoute(
+                        route:  Utils.getRouter(
                             builder: (ctx) => new GuideArticlePage(
                                   articleId: item.ID,
                                 )));

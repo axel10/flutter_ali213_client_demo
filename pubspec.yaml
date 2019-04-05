@@ -10,7 +10,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -30,8 +30,9 @@ dependencies:
   get_ip: ^0.2.0
   shared_preferences: ^0.4.0
   cached_network_image: ^0.5.0+1
-  flutter_html_view: ^0.5.11
   bubble_tab_indicator: ^0.1.4
+  flutter_html: ^0.9.6
+
 
 dev_dependencies:
   flutter_test:
