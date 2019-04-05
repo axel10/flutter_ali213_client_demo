@@ -1,7 +1,7 @@
 # youxia
 
 游侠客户端的flutter实现。
-完成了新闻功能
+完成了新闻、攻略模块
 
 ## Getting Started
 
